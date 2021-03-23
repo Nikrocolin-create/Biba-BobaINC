@@ -13,16 +13,19 @@ class _WearListState extends State<WearList> {
   List<String> mock_list = ["one","two","three","four","five", "six","seven"];
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.all(16),
-      itemCount: clothes,
-      // Provide a builder function. This is where the magic happens.
-      // Convert each item into a widget based on the type of item it is.
-      itemBuilder: (context, index) {
-        return Container(
-          child: InfoBlock(mock_list[index]),
-        );
-      },
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+        padding: EdgeInsets.all(16),
+        itemCount: clothes,
+        // Provide a builder function. This is where the magic happens.
+        // Convert each item into a widget based on the type of item it is.
+        itemBuilder: (context, index) {
+          return Container(
+            child: InfoBlock(mock_list[index]),
+          );
+        },
+      ),
     );
   }
 }

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:your_brand/ListOfWear.dart';
 import 'package:your_brand/ButtonModule.dart';
 import 'package:your_brand/ProductInfo.dart';
-void main() {
+import 'weathertab.dart';
+import 'package:firebase_core/firebase_core.dart';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -20,47 +24,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Column(
-       children: [
-         Expanded(
-           flex: 2,
-           child: WeatherTab(color: Colors.green,),
-         ),
-        Expanded(
-            flex:10,
-            child: WearList(),),
-         Expanded(
-            flex:2,
-            child: ButtonPanel(),),
-       ],
+      home: Scaffold(
+        body: Column(
+         children: [
+           Expanded(
+             flex: 2,
+             child: WeatherTab(color: Colors.green,),
+           ),
+          Expanded(
+              flex:10,
+              child: WearList(),),
+           Expanded(
+              flex:2,
+              child: ButtonPanel(),),
+         ],
+        ),
       ),
     );
   }
 }
 
-class WeatherTab extends StatefulWidget{
-  final Color color;
 
-  const WeatherTab({Key key, this.color}) : super(key: key);
-  @override
-  _WeatherTabPageState createState() {
-    return _WeatherTabPageState(color);
-  }
-}
-
-class _WeatherTabPageState extends State<WeatherTab>{
-  Color contColor;
-  _WeatherTabPageState(Color color) {
-    contColor = color;
-  }
-
-  Widget build (BuildContext context) {
-    return Container(
-      height: 50,
-      color: contColor,
-    );
-  }
-}
 
 
 

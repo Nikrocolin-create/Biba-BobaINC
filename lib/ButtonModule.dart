@@ -8,38 +8,43 @@ class ButtonPanel extends StatefulWidget{
 
 class _ButtonPanelState extends State<ButtonPanel>{
   Widget build(BuildContext context) {
-    return ButtonBar(
-      alignment: MainAxisAlignment.center,
-      children: [
-        Container(
-            color: Colors.green,
-            width: MediaQuery.of(context).size.width/2.5,
-            height: MediaQuery.of(context).size.height/1.1,
-            child:FlatButton(
-              textColor: Colors.white,
+    return Container(
+      color: Colors.white,
+
+      child: ButtonBar(
+        alignment: MainAxisAlignment.center,
+        buttonPadding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/15,0,MediaQuery.of(context).size.width/15,0),
+        children: [
+          Container(
               color: Colors.green,
-              splashColor: Colors.blueAccent,
+              width: MediaQuery.of(context).size.width/2.5,
+              height: MediaQuery.of(context).size.height/1.1,
+              child:FlatButton(
+                textColor: Colors.white,
+                color: Colors.green,
+                splashColor: Colors.blueAccent,
 
-              onPressed: (){},
+                onPressed: (){},
 
-              child: Text('New Set',
-                style: TextStyle(fontSize: 20.0),),)
-        ),
-        Container(
-            color: Colors.green,
-            width: MediaQuery.of(context).size.width/2.5, // запомнить
-            height: MediaQuery.of(context).size.height/1.1,
-            child:FlatButton(
-              textColor: Colors.white,
+                child: Text('New Set',
+                  style: TextStyle(fontSize: 20.0),),)
+          ),
+          Container(
               color: Colors.green,
-              splashColor: Colors.blueAccent,
+              width: MediaQuery.of(context).size.width/2.5, // запомнить
+              height: MediaQuery.of(context).size.height/1.1,
+              child:FlatButton(
+                textColor: Colors.white,
+                color: Colors.green,
+                splashColor: Colors.blueAccent,
 
-              onPressed: (){},
+                onPressed: (){},
 
-              child: Text('Options',
-                style: TextStyle(fontSize: 20.0),),)
-        ),
-      ],
+                child: Text('Options',
+                  style: TextStyle(fontSize: 20.0),),)
+          ),
+        ],
+      ),
     );
   }
 }

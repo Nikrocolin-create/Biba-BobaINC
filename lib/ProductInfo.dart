@@ -1,5 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 class ProductArguments {
   final String id;
 
@@ -14,7 +15,8 @@ class ProductInfoScreen extends StatelessWidget {
     // Extract the arguments from the current ModalRoute settings and cast
     // them as ScreenArguments.
     final ProductArguments args = ModalRoute.of(context).settings.arguments;
-
+    DatabaseReference _testdb = FirebaseDatabase.instance.reference().child('your-brand-2217e-default-rtdb'); // name of instance
+    _testdb.set("${args}");
     return Scaffold(
       appBar: AppBar(
         title: Text(args.id.toString(),
@@ -26,8 +28,8 @@ class ProductInfoScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20.0),
-            height: 200.0,
+            margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height/40),
+            height:  MediaQuery.of(context).size.height/4,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
@@ -54,6 +56,7 @@ class ProductInfoScreen extends StatelessWidget {
               ],
             ),
           ),
+          PriceAndBrand(args.id.toString()),
         ],
       ),
     );
@@ -61,8 +64,56 @@ class ProductInfoScreen extends StatelessWidget {
 }
 
 class PriceAndBrand extends StatelessWidget{
+  dynamic id;
+  PriceAndBrand(dynamic name){
+    id = name;
+  }
   @override
   Widget build(BuildContext context) {
-
+      return Row(
+        children: [
+          Price(id),
+          Brand(id)
+        ],
+      );
   }
+}
+
+class Price extends StatelessWidget {
+  dynamic id;
+  Price(dynamic name){
+    id = name;
+  }
+  Widget build (BuildContext context) {
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/20, MediaQuery.of(context).size.width/20,
+          MediaQuery.of(context).size.width/20, MediaQuery.of(context).size.width/20),
+      padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/25, MediaQuery.of(context).size.width/25,
+          MediaQuery.of(context).size.width/25, MediaQuery.of(context).size.width/25),
+      decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+      width: MediaQuery.of(context).size.width/2.5,
+      height: MediaQuery.of(context).size.width/5.5,
+      child: Text(id),
+    );
+  }
+}
+
+class Brand extends StatelessWidget{
+  dynamic id;
+  Brand(dynamic name){
+    id = name;
+  }
+    Widget build (BuildContext context) {
+      return Container(
+        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/20, MediaQuery.of(context).size.width/20,
+            MediaQuery.of(context).size.width/20, MediaQuery.of(context).size.width/20),
+        padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/25, MediaQuery.of(context).size.width/25,
+            MediaQuery.of(context).size.width/25, MediaQuery.of(context).size.width/25),
+        decoration: BoxDecoration(border: Border.all(color: Colors.redAccent)),
+        width: MediaQuery.of(context).size.width/2.5,
+        height: MediaQuery.of(context).size.width/5.5,
+        child: Text(id),
+      );
+    }
 }
