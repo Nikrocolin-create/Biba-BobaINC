@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 class ProductArguments {
   final String id;
 
@@ -117,3 +118,4 @@ class Brand extends StatelessWidget{
       );
     }
 }
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_brand/ProductInfo.dart';
 import 'main.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 class WearList extends StatefulWidget {
   @override
   _WearListState createState() {
@@ -9,8 +10,13 @@ class WearList extends StatefulWidget {
 }
 
 class _WearListState extends State<WearList> {
-  int clothes=7;
-  List<String> mock_list = ["one","two","three","four","five", "six","seven"];
+  List<String> mock_list;
+  int clothes;
+  _WearListState () {
+    mock_list= ["шапка.png","куртка.png","свитер.png","брюки.png","ботинки.png"];
+    clothes= mock_list.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,6 +41,19 @@ class InfoBlock extends StatelessWidget {
   InfoBlock(String t) {
     title = t;
   }
+  Future<Image> _getImage(BuildContext context, String ImageName) async {
+    Image image;
+    await FireStorageService.loadImage(context, ImageName).then((value)
+    {
+      image = Image.network(
+          value.toString(),
+          fit: BoxFit.scaleDown
+      );
+    }
+    );
+    return image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -48,7 +67,21 @@ class InfoBlock extends StatelessWidget {
                 arguments: ProductArguments(title),);
             },
             child: Container(
-              color: Colors.green,
+              child: FutureBuilder(
+                future: _getImage(context, title),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      return snapshot.data;
+                    } else if (snapshot.hasError) {
+                      return new Text("${snapshot.error}");
+                    }
+                  }
+
+                  // By default, show a loading spinner
+                  return new CircularProgressIndicator();
+                },
+              ),
               width: MediaQuery.of(context).size.width/2.2,
               height: MediaQuery.of(context).size.height/4.7,
             ),
@@ -101,4 +134,11 @@ class InfoBlock extends StatelessWidget {
     );
   }
 }
+
+class FireStorageService extends ChangeNotifier {
+  static Future<dynamic> loadImage(BuildContext context, String image) async {
+    return FirebaseStorage.instance.ref().child(image).getDownloadURL();
+  }
+}
+
 
